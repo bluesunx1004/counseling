@@ -15,8 +15,11 @@ async function loadStudentOptions(selected) {
   return students;
 }
 
+let currentLogs = [];
+
 function renderContent(data) {
   const { student, schedules, logs } = data;
+  currentLogs = logs;
   const content = document.getElementById("content");
 
   if (!student) {
@@ -46,7 +49,12 @@ function renderContent(data) {
           const l = it.data;
           return `
           <div class="timeline-item">
-            <div class="timeline-date">${l.date} · 상담 기록 (${TYPE_LABEL[l.type] || l.type})</div>
+            <div class="timeline-date">${l.date} · 상담 기록 (${TYPE_LABEL[l.type] || l.type})
+              <span class="no-print" style="float:right;">
+                <button class="btn secondary" style="padding:3px 10px;font-size:12px;" onclick="openEditLog('${l.logId}')">수정</button>
+                <button class="btn danger" style="padding:3px 10px;font-size:12px;" onclick="removeLog('${l.logId}')">삭제</button>
+              </span>
+            </div>
             <div class="detail-box">
               <h4>핵심 상담 주제</h4><p>${escapeHtml(l.aiTopic) || "-"}</p>
               <h4>학생 발언 요약</h4><p>${escapeHtml(l.aiStudentSummary) || "-"}</p>
@@ -82,6 +90,59 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
+// ---- 상담 기록 수정 ----
+function openEditLog(logId) {
+  const l = currentLogs.find((x) => x.logId === logId);
+  if (!l) return;
+  document.getElementById("edit-logId").value = l.logId;
+  document.getElementById("edit-date").value = l.date || "";
+  document.getElementById("edit-topic").value = l.aiTopic || "";
+  document.getElementById("edit-student").value = l.aiStudentSummary || "";
+  document.getElementById("edit-teacher").value = l.aiTeacherAdvice || "";
+  document.getElementById("edit-followup").value = l.aiFollowUp || "";
+  document.getElementById("edit-memo").value = l.teacherMemo || "";
+  hideMsg(document.getElementById("edit-msg"));
+  document.getElementById("editModalBg").style.display = "block";
+}
+
+function closeEditLog() {
+  document.getElementById("editModalBg").style.display = "none";
+}
+
+async function saveEditLog() {
+  const emsg = document.getElementById("edit-msg");
+  const btn = document.getElementById("edit-save");
+  btn.disabled = true;
+  try {
+    await apiPost("updateLog", {
+      logId: document.getElementById("edit-logId").value,
+      date: document.getElementById("edit-date").value,
+      aiTopic: document.getElementById("edit-topic").value.trim(),
+      aiStudentSummary: document.getElementById("edit-student").value.trim(),
+      aiTeacherAdvice: document.getElementById("edit-teacher").value.trim(),
+      aiFollowUp: document.getElementById("edit-followup").value.trim(),
+      teacherMemo: document.getElementById("edit-memo").value.trim()
+    });
+    closeEditLog();
+    loadPortfolio(document.getElementById("studentSelect").value);
+  } catch (e) {
+    showMsg(emsg, "저장에 실패했습니다: " + e.message, "error");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ---- 상담 기록 삭제 ----
+async function removeLog(logId) {
+  if (!confirm("이 상담 기록을 삭제하시겠습니까? 되돌릴 수 없습니다.\n(첨부 파일은 구글 드라이브에 남습니다.)")) return;
+  try {
+    await apiPost("deleteLog", { logId });
+    loadPortfolio(document.getElementById("studentSelect").value);
+  } catch (e) {
+    alert("삭제에 실패했습니다: " + e.message);
+  }
+}
+
 async function loadPortfolio(studentId) {
   const content = document.getElementById("content");
   content.innerHTML = `<div class="loading">불러오는 중...</div>`;
@@ -105,4 +166,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     history.replaceState(null, "", `portfolio.html?studentId=${encodeURIComponent(e.target.value)}`);
     loadPortfolio(e.target.value);
   });
+  document.getElementById("edit-save").addEventListener("click", saveEditLog);
+  document.getElementById("edit-cancel").addEventListener("click", closeEditLog);
 });
