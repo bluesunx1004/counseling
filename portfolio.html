@@ -27,6 +27,31 @@
   <div id="content"></div>
 </main>
 
+<!-- 상담 기록 수정 모달 -->
+<div id="editModalBg" class="no-print" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:50;overflow:auto;">
+  <div class="card" style="max-width:560px;margin:48px auto;">
+    <h2>상담 기록 수정</h2>
+    <input type="hidden" id="edit-logId">
+    <label for="edit-date">상담 일자</label>
+    <input type="date" id="edit-date">
+    <label for="edit-topic">핵심 상담 주제</label>
+    <textarea id="edit-topic"></textarea>
+    <label for="edit-student">학생 발언 요약</label>
+    <textarea id="edit-student"></textarea>
+    <label for="edit-teacher">교사 지도 및 조언 내용</label>
+    <textarea id="edit-teacher"></textarea>
+    <label for="edit-followup">추후 지도 계획</label>
+    <textarea id="edit-followup"></textarea>
+    <label for="edit-memo">교사 메모(원문)</label>
+    <textarea id="edit-memo"></textarea>
+    <div id="edit-msg" class="msg" style="display:none;"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;">
+      <button class="btn" id="edit-save">저장</button>
+      <button class="btn secondary" id="edit-cancel">취소</button>
+    </div>
+  </div>
+</div>
+
 <script src="js/config.js"></script>
 <script src="js/api.js"></script>
 <script src="js/portfolio.js"></script>
