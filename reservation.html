@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일정 예약 | 학급 상담 포트폴리오</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <div class="brand">학급 상담 포트폴리오</div>
+  <nav class="app-nav">
+    <a href="index.html">상담 캘린더</a>
+    <a href="reservation.html" class="active">일정 예약</a>
+    <a href="upload.html">상담 입력 및 업로드</a>
+    <a href="portfolio.html">학생별 포트폴리오</a>
+    <a href="students.html">학생 명단</a>
+  </nav>
+</header>
+
+<main>
+  <h1>상담 일정 예약</h1>
+  <p class="page-desc">학생을 선택하고 원하는 날짜의 상담 가능 시간대를 골라 신청하세요. 이미 예약된 시간은 자동으로 비활성화됩니다.</p>
+
+  <div id="msg" class="msg" style="display:none;"></div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h2>1. 학생 및 날짜 선택</h2>
+      <label for="studentSelect">학생</label>
+      <select id="studentSelect"></select>
+
+      <label for="dateInput">상담 희망 날짜</label>
+      <input type="date" id="dateInput">
+
+      <label for="purposeInput">상담 목적</label>
+      <textarea id="purposeInput" placeholder="예: 교우관계 상담, 진로 상담 등"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>2. 가능한 시간대 선택</h2>
+      <div id="slotStatus" class="loading">날짜를 먼저 선택하세요.</div>
+      <div id="slotGrid" class="slot-grid"></div>
+    </div>
+  </div>
+
+  <button class="btn" id="submitBtn" disabled>예약 신청하기</button>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/reservation.js"></script>
+</body>
+</html>

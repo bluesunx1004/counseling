@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학생 명단 | 학급 상담 포트폴리오</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <div class="brand">학급 상담 포트폴리오</div>
+  <nav class="app-nav">
+    <a href="index.html">상담 캘린더</a>
+    <a href="reservation.html">일정 예약</a>
+    <a href="upload.html">상담 입력 및 업로드</a>
+    <a href="portfolio.html">학생별 포트폴리오</a>
+    <a href="students.html" class="active">학생 명단</a>
+  </nav>
+</header>
+
+<main>
+  <h1>학생 명단 관리</h1>
+  <p class="page-desc">학급 학생의 기본 인적사항과 특이사항을 등록·수정합니다.</p>
+
+  <div id="msg" class="msg" style="display:none;"></div>
+
+  <div class="card">
+    <h2 id="formTitle">학생 추가</h2>
+    <input type="hidden" id="editingId">
+    <div class="grid-2">
+      <div>
+        <label for="numberInput">번호</label>
+        <input type="text" id="numberInput" placeholder="예: 3">
+        <label for="nameInput">이름</label>
+        <input type="text" id="nameInput" placeholder="예: 홍길동">
+        <label for="birthInput">생년월일</label>
+        <input type="date" id="birthInput">
+      </div>
+      <div>
+        <label for="contactInput">비상연락처</label>
+        <input type="tel" id="contactInput" placeholder="예: 010-1234-5678">
+        <label for="notesInput">특이사항</label>
+        <textarea id="notesInput" placeholder="알레르기, 가정환경, 유의사항 등"></textarea>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px;">
+      <button class="btn" id="saveBtn">저장</button>
+      <button class="btn secondary" id="cancelEditBtn" style="display:none;">취소</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>전체 학생 (<span id="countLabel">0</span>명)</h2>
+    <table>
+      <thead><tr><th>번호</th><th>이름</th><th>생년월일</th><th>비상연락처</th><th>특이사항</th><th></th></tr></thead>
+      <tbody id="studentTbody"></tbody>
+    </table>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/students.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상담 입력 및 업로드 | 학급 상담 포트폴리오</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <div class="brand">학급 상담 포트폴리오</div>
+  <nav class="app-nav">
+    <a href="index.html">상담 캘린더</a>
+    <a href="reservation.html">일정 예약</a>
+    <a href="upload.html" class="active">상담 입력 및 업로드</a>
+    <a href="portfolio.html">학생별 포트폴리오</a>
+    <a href="students.html">학생 명단</a>
+  </nav>
+</header>
+
+<main>
+  <h1>상담 입력 및 업로드</h1>
+  <p class="page-desc">음성 녹음, PDF, 직접 작성한 메모 중 하나를 입력하면 AI가 핵심 주제·학생 발언 요약·지도 내용·후속 계획으로 자동 정리합니다.</p>
+
+  <div id="msg" class="msg" style="display:none;"></div>
+
+  <div class="card">
+    <h2>1. 기본 정보</h2>
+    <div class="grid-2">
+      <div>
+        <label for="studentSelect">학생</label>
+        <select id="studentSelect"></select>
+
+        <label for="scheduleSelect">연결할 상담 일정 (선택)</label>
+        <select id="scheduleSelect"><option value="">- 연결 안 함 -</option></select>
+      </div>
+      <div>
+        <label for="dateInput">상담 일자</label>
+        <input type="date" id="dateInput">
+
+        <label for="typeSelect">자료 유형</label>
+        <select id="typeSelect">
+          <option value="AUDIO">음성 파일 (mp3/m4a/wav)</option>
+          <option value="PDF">PDF 파일</option>
+          <option value="TEXT">직접 입력한 메모</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. 자료 입력</h2>
+    <div id="fileArea">
+      <label for="fileInput">파일 선택</label>
+      <input type="file" id="fileInput" accept="audio/*,.pdf">
+    </div>
+    <label for="memoInput">상담 메모 / 교사 소견 (직접 입력, 음성·PDF와 함께 추가 메모도 가능)</label>
+    <textarea id="memoInput" placeholder="예: 학생이 최근 교우관계로 어려움을 겪고 있다고 이야기함..."></textarea>
+  </div>
+
+  <button class="btn" id="submitBtn">저장 및 AI 요약 실행</button>
+
+  <div class="card" id="resultCard" style="display:none;margin-top:20px;">
+    <h2>AI 정리 결과</h2>
+    <div class="detail-box">
+      <h4>핵심 상담 주제</h4><p id="r-topic"></p>
+      <h4>학생 발언 요약</h4><p id="r-student"></p>
+      <h4>교사 지도 및 조언 내용</h4><p id="r-teacher"></p>
+      <h4>추후 지도 계획 (Follow-up)</h4><p id="r-followup"></p>
+    </div>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/upload.js"></script>
+</body>
+</html>
