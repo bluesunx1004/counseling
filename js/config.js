@@ -5,7 +5,7 @@
 const CONFIG = {
   // Google Apps Script를 웹앱으로 배포하면 나오는 URL을 그대로 붙여넣으세요.
   // 예: "https://script.google.com/macros/s/AKfycb.../exec"
-  API_URL: "https://script.google.com/macros/s/AKfycbymfdePp9VCdQD7G2sPzJb4N5FhtmFZc5nvAFVEKI3r8sdB3jmIyr9vgB16isb1xko/exec",
+  API_URL: "https://script.google.com/macros/s/AKfycbznUJ6vpzc054PEunst2ciAgAapUSP2LiBIvedAEkucytc5KHQs45hxLXzHQnJu6HBR/exec",
 
   // 상담 예약 가능 시간대 설정 (24시간제, 분 단위)
   SLOT_START: "09:00",
